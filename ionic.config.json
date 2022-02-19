@@ -1,0 +1,7 @@
+{
+  "name": "geo-alarm",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
