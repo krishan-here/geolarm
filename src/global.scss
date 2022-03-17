@@ -24,3 +24,36 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.searchbar-input, .sc-ion-searchbar-md{
+  padding-inline-start: 7px !important;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+.pac-container{
+  z-index: 10001;
+}
+
+// Quick update Modal
+.quick_update_modal {
+  --height: 50vh;
+  --width: 80vw;
+  --min-height: 40vh;
+  --border-radius: 20px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ion-toggle{
+  --handle-height: 15px;
+  --handle-width: 15px;
+  --handle-spacing: 5px;
+  height: 28px !important;
+
+}

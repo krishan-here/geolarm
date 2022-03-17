@@ -1,0 +1,12 @@
+<ion-content>
+  <div class="container">
+    <p class="address">{{reminderItem?.address || 'NA'}}</p>
+    <div class="snooze" (click)="closeAlarm()">
+      {{reminderItem?.label || ''}}
+    </div>
+    <div class="turn_off">
+      <ion-icon name="chevron-up-outline"></ion-icon>
+      <p>Swipe to turn off</p>
+    </div>
+  </div>
+</ion-content>
