@@ -1,0 +1,19 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Alarms</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <div class="sound_wrapper pt-4">
+      <div class="sound" *ngFor="let item of soundArr;let idx=index" (click)="playSound(idx+1)" [ngClass]="{'active_sound': idx+1 === selectedIndex}">
+        <img [src]="'assets/images/image_' + (idx + 1) + '.jpg'" alt="">
+        <p>{{item}}</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

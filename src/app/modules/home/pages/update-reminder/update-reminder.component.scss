@@ -1,0 +1,20 @@
+.update_header{
+  ion-col{
+    text-align: center;
+    p{
+      margin: 0;
+    }
+    .title{
+      font-size: large;
+    }
+  }
+}
+
+.container{
+  ion-item{
+    margin-top: 10px;
+  }
+  .ringtone_item::part(native):active{
+    --background: #f5f5f5 !important;
+  }
+}

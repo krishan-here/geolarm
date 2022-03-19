@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="!showRadiobtn" class="mt-2"> Geolarm </ion-title>
+    <ion-icon
+      *ngIf="!showRadiobtn"
+      routerLink="/home/account"
+      class="user_icon mt-2"
+      size="large"
+      name="person-circle-outline"
+    ></ion-icon>
+    <ion-grid *ngIf="showRadiobtn">
+      <ion-row>
+        <ion-col size="2">
+          <ion-icon
+            name="close-outline"
+            size="large"
+            (click)="cancelDelete()"
+          ></ion-icon>
+        </ion-col>
+        <ion-col size="8">
+          <p *ngIf="seletedItemCount === 0" class="title">Select Items</p>
+          <p *ngIf="seletedItemCount === 1" class="title">
+            {{ seletedItemCount }} Item Selected
+          </p>
+          <p *ngIf="seletedItemCount > 1" class="title">
+            {{ seletedItemCount }} Items Selected
+          </p>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon
+            class="select_all"
+            name="checkmark-done-circle-outline"
+            size="large"
+            (click)="selectAllItem()"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="currentTab" [value]="alarmTab" color="light">
+      <ion-segment-button [value]="alarmTab">
+        <ion-label>Alarms</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [value]="contactTab">
+        <ion-label>Contacts</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="currentTab === alarmTab">
+    <div class="no_data_found" *ngIf="reminderList.length === 0">
+      <img src="assets/images/no_alarm.png" alt="" />
+      <p>No alarms here</p>
+    </div>
+    <div class="reminder_container">
+      <ion-list *ngIf="reminderList.length !== 0">
+        <ion-row
+          class="reminder_item"
+          *ngFor="let item of reminderList; let idx = index"
+          (longPressed)="showDeleteView(idx)"
+          ion-button
+          (click)="addItemToDelete(idx)"
+          ion-long-press
+          [interval]="1000"
+        >
+          <ion-col size="10" (click)="presentModal(idx)">
+            <p class="text-truncate">{{ item?.address || "NA" }}</p>
+            <p>{{ item?.range }} | {{ item?.currentRange }}</p>
+          </ion-col>
+          <ion-col size="2">
+            <ion-toggle
+              *ngIf="!showRadiobtn"
+              mode="ios"
+              [checked]="item.isTurnOn"
+              (ionChange)="toggleReminder($event, idx)"
+            ></ion-toggle>
+            <ion-checkbox
+              *ngIf="showRadiobtn"
+              mode="ios"
+              [checked]="deleteItemArray[idx]"
+              (ionFocus)="addItemToDelete(idx)"
+              disabled="true"
+            ></ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+
+      <div class="add_reminder">
+        <ion-fab vertical="bottom" horizontal="center">
+          <ion-fab-button *ngIf="!showRadiobtn" (click)="goToMap()" color="white">
+            <ion-icon
+              name="add-outline"
+              size="large"
+              color="primary"
+              class="add_icon"
+            ></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button
+            *ngIf="showRadiobtn"
+            (click)="deleteItems()"
+            color="white"
+          >
+            <fa-icon [icon]="faDelete" class="delete_icon"></fa-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="currentTab === contactTab">
+    <div class="no_data_found" *ngIf="contacts.length === 0">
+      <img src="assets/images/no_alarm.png" alt="" />
+      <p>No Contacts found</p>
+    </div>
+    <ion-list>
+      <ion-row *ngFor="let user of contacts" class="user_contact">
+        <ion-col size="2" class="d-flex align-items-center justify-content-center">
+          <img *ngIf="user?.photoThumbnail" [src]="user?.photoThumbnail" alt="" class="user_profile">
+          <div class="user_profile_icon">
+            <ion-icon
+            *ngIf="!user?.photoThumbnail"
+            name="person"
+            color="primary"
+            ></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col size="10" class="d-flex align-items-start flex-column justify-content-center">
+          <p class="font-weight-bold m-0">{{user.displayName}}</p>
+          <p class="m-0">{{user.phoneNumbers[0].number}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </div>
+</ion-content>

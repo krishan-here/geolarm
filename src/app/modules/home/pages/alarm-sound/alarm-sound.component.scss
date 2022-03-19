@@ -1,0 +1,37 @@
+.title{
+  font-size: xx-large;
+  font-weight: lighter;
+  padding-left: 10px;
+}
+.sound_wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  box-sizing: border-box;
+  .sound{
+    border-radius: 10px;
+    margin-bottom: 10px;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    img{
+      width: 150px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    p{
+      position: absolute;
+      margin: 0;
+      bottom: 5px;
+      color: #fff;
+      font-size: larger;
+    }
+  }
+  .active_sound{
+    box-sizing: border-box;
+    outline: 1px solid #279BEF;
+    padding: 2px;
+  }
+}
