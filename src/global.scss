@@ -26,8 +26,9 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-.searchbar-input, .sc-ion-searchbar-md{
-  padding-inline-start: 7px !important;
+.searchbar-input, .sc-ion-searchbar-md, .form-outline{
+  // padding-inline-start: 7px !important;
+  margin-right: 10px;
   box-shadow: none;
 }
 
@@ -57,3 +58,12 @@ ion-toggle{
   height: 28px !important;
 
 }
+<<<<<<< HEAD
+=======
+
+
+ion-toolbar{
+  --background: #4D77FF;
+  color: #fff;
+}
+>>>>>>> dab5ea9fc17518d650453a12260301fb7dfbf0e2

@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+<<<<<<< HEAD
+=======
+import { AccountComponent } from './pages/account/account.component';
+>>>>>>> dab5ea9fc17518d650453a12260301fb7dfbf0e2
 
 import { AddAlarmComponent } from './pages/add-alarm/add-alarm.component';
 import { AlarmSoundComponent } from './pages/alarm-sound/alarm-sound.component';
@@ -27,6 +31,13 @@ const routes: Routes = [
   {
     path: 'ring-alarm',
     component: RingAlarmComponent,
+<<<<<<< HEAD
+=======
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
+>>>>>>> dab5ea9fc17518d650453a12260301fb7dfbf0e2
   }
 ];
 
