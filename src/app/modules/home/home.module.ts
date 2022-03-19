@@ -14,6 +14,7 @@ import { AlarmSoundComponent } from './pages/alarm-sound/alarm-sound.component';
 import { QuickUpdateComponent } from './pages/quick-update/quick-update.component';
 import { RingAlarmComponent } from './pages/ring-alarm/ring-alarm.component';
 import { LongPressModule } from 'ionic-long-press';
+import { AccountComponent } from './pages/account/account.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { LongPressModule } from 'ionic-long-press';
     UpdateReminderComponent,
     AlarmSoundComponent,
     QuickUpdateComponent,
-    RingAlarmComponent
+    RingAlarmComponent,
+    AccountComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

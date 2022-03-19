@@ -5,7 +5,10 @@ import { Reminder } from 'src/app/core/interfaces/reminder';
 import { ReminderService } from 'src/app/core/services/reminder.service';
 import { QuickUpdateComponent } from '../quick-update/quick-update.component';
 import { Geolocation } from '@capacitor/geolocation';
+import { Contacts } from '@capacitor-community/contacts';
 import { faD, faTrash } from '@fortawesome/free-solid-svg-icons';
+import appConstants from 'src/app/core/utils/app.constants';
+import { Contact } from 'src/app/core/interfaces/contact';
 
 declare const google;
 
@@ -18,17 +21,23 @@ declare const google;
 export class HomeComponent implements OnInit {
 
   @ViewChild('searchbar', {static: false}) searchbar: TextValueAccessor;
+  alarmTab = appConstants.homeTabs.alarm;
+  contactTab = appConstants.homeTabs.contact;
+  currentTab= this.alarmTab;
   currentLocation: {lat: number; long: number} = {lat: 0, long: 0};
   watchId;
   alarmSound: HTMLAudioElement;
-
-  reminderList: Reminder[];
+  reminderList: Reminder[]=[];
 
   // delete section
   showRadiobtn = false;
   deleteItemArray= [];
   seletedItemCount = 0;
   faDelete = faTrash;
+
+  // contacts
+  contacts: Contact[]=[];
+
 
   constructor(
     private router: Router,
@@ -38,7 +47,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   async ngOnInit(){
-    // await this.requestPermissions();
+    await this.requestPermissions();
+    this.getContacts();
     this.getAllReminder();
   }
 
@@ -47,8 +57,19 @@ export class HomeComponent implements OnInit {
     this.watchPosition();
   }
 
+  getContacts(){
+      Contacts.getContacts().then(result => {
+        this.contacts = result.contacts;
+        this.contacts.sort((x, y)=> x.displayName.localeCompare(y.displayName));
+    });
+  }
+
+  segmentChanged(event){
+    console.log(this.currentTab);
+  }
+
   showDeleteView(itemIndex){
-    navigator.vibrate(100);
+    navigator.vibrate(30);
     this.showRadiobtn= true;
     this.seletedItemCount=1;
     this.deleteItemArray = Array.from({length: this.reminderList.length}, ()=> false);
@@ -69,17 +90,10 @@ export class HomeComponent implements OnInit {
     this.seletedItemCount = 0;
   }
 
-  clickCheck(event){
-    console.log('event ============',event);
-  }
-
   addItemToDelete(itemIndex, event?: any){
     if(!this.showRadiobtn){
       return;
     }
-    console.log(event);
-    console.log(this.deleteItemArray);
-
     if(event){
       this.deleteItemArray[itemIndex] = event.detail.checked;
     }else{
@@ -92,7 +106,6 @@ export class HomeComponent implements OnInit {
     }else{
       this.seletedItemCount--;
     }
-    console.log(this.deleteItemArray);
     return;
   }
 
@@ -104,17 +117,17 @@ export class HomeComponent implements OnInit {
 
   getAllReminder(){
     this.reminderList = this.reminderService.getAllReminderList();
-    console.log('list ====', this.reminderList);
-    // this.useLongPress(this.listRef.toArray());
   }
 
   async goToMap(){
     await this.clearWatch();
-    this.router.navigateByUrl('/home/add-alarm');
+    this.router.navigate(['/home', 'add-alarm']);
   }
 
   async requestPermissions() {
     const permResult = await Geolocation.requestPermissions();
+    const contactResult = await Contacts.getPermissions();
+
   }
 
   watchPosition() {
